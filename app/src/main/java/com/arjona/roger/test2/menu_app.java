@@ -1,7 +1,11 @@
 package com.arjona.roger.test2;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.arjona.roger.test2.Proyectos.CrearProyectoFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -14,12 +18,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class menu_app extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CrearProyectoFragment.OnFragmentInteractionListener {
+
+    FloatingActionButton fab;
+    public static Context contextOfApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +36,8 @@ public class menu_app extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        contextOfApplication = getApplicationContext();
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,6 +45,9 @@ public class menu_app extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+
+        //Creamos el cache del usuario para consultar constantemente
+        saveUserData();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -45,6 +57,17 @@ public class menu_app extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+    //Esta funcion sirve para obtener el FAB en algun otro activity y asi ocultarlo o mostrarlo
+    public FloatingActionButton getFloatingActionButton() {
+        return fab;
+    }
+
+    //Esta funcion es para obtener el context
+    public static Context getContextOfApplication(){
+        return contextOfApplication;
     }
 
     @Override
@@ -84,10 +107,13 @@ public class menu_app extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment fragment_layout = null;
+        boolean fragment_seleccionado = false;
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            fragment_layout = new CrearProyectoFragment();
+            fragment_seleccionado = true;
+        } /*else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -95,12 +121,30 @@ public class menu_app extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } */
+        else if (id == R.id.nav_send) {
 
+        }
+
+        if (fragment_seleccionado){
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment_layout).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    public void saveUserData(){
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("username", "roger");
+        editor.putString("password", "");
+        editor.commit();
     }
 }

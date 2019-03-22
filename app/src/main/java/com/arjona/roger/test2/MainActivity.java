@@ -3,6 +3,7 @@ package com.arjona.roger.test2;
 import android.content.Intent;
 //import android.support.design.widget.FloatingActionButton;
 //import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,25 +12,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.arjona.roger.test2.Conexion.CRUD;
+import com.arjona.roger.test2.Conexion.HttpRequest;
 import com.cloudinary.android.MediaManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -41,9 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private String currentPhotoPath = null;
     private String imageFileName = "";
-    private Button btnpost,atakephoto;
+    private Button btnpost,atakephoto, buttonhttp;
     private EditText etmulti;
     private static final String TAG = "SampleActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +50,21 @@ public class MainActivity extends AppCompatActivity {
         atakephoto = findViewById(R.id.takephoto);
         imageView = findViewById(R.id.imageView);
         etmulti = findViewById(R.id.etmulti);
+        buttonhttp = findViewById(R.id.buttonhttp);
+        buttonhttp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<String> datos = new ArrayList<String>();
+                datos.add("1");
+                datos.add("roger");
+
+
+
+                new CRUD.crear_proyecto().execute(datos);
+                System.out.println("");
+            }
+        });
+
         atakephoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 /*test_http.execute("http://google.com");
                 myvalue = new myTask().execute().get();*/
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                /*FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                 DocumentReference docRef = db.collection("usuarios").document("rogerarjona");
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -89,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Otro Error", Toast.LENGTH_LONG).show();
                         }
                     }
-                });
+                });*/
 
 
 
@@ -146,5 +158,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private class test_http extends AsyncTask<String, Long, Integer> {
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+
+            int response = 0;
+            //int response = HttpRequest.post("https://10d76004.ngrok.io/test/").send(jsonObject.toString()).code();
+            //HttpRequest request = HttpRequest.post("https://10d76004.ngrok.io/test/");
+            JSONObject jsonObject=null;
+            try {
+                jsonObject = new JSONObject();
+                jsonObject.put("usuario", "roger");
+                jsonObject.put("password", "temporal");
+
+                Log.d("My App", jsonObject.toString());
+
+                HttpRequest request = HttpRequest.get("https://80e23ecc.ngrok.io/get-test/").header("Content-Type","application/json").send(jsonObject.toString());
+                response = request.code();
+                String body = request.body();
+                System.out.println("");
+
+            } catch (Throwable t) {
+                Log.e("My App", "Could not parse malformed JSON: \"" + "json" + "\"");
+            }
+
+            return response;
+        }
+
+    }
 
 }
