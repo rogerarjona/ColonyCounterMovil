@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.arjona.roger.test2.Proyectos.CrearProyectoFragment;
+import com.arjona.roger.test2.Proyectos.FragmentProyectos;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,9 +23,10 @@ import androidx.fragment.app.Fragment;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class menu_app extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CrearProyectoFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CrearProyectoFragment.OnFragmentInteractionListener, FragmentProyectos.OnFragmentInteractionListener {
 
     FloatingActionButton fab;
     public static Context contextOfApplication;
@@ -41,8 +43,16 @@ public class menu_app extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+
+                if (view.getId() == R.id.fragment_proyectos_id){
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+                else{
+                    Toast.makeText(view.getContext(), "TEST", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -123,7 +133,8 @@ public class menu_app extends AppCompatActivity
 
         } */
         else if (id == R.id.nav_send) {
-
+            fragment_layout = new FragmentProyectos();
+            fragment_seleccionado = true;
         }
 
         if (fragment_seleccionado){

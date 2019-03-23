@@ -5,12 +5,22 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.arjona.roger.test2.Adaptadores.AdapterProyectos;
+import com.arjona.roger.test2.Conexion.CRUD;
+import com.arjona.roger.test2.Entidades.Proyecto;
+import com.arjona.roger.test2.Entidades.Utils;
 import com.arjona.roger.test2.R;
+import com.arjona.roger.test2.menu_app;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,9 +41,12 @@ public class FragmentProyectos extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    public ArrayList<Proyecto> listaProyectos;
+    RecyclerView recyclerProyectos;
+    String username;
 
     public FragmentProyectos() {
-        // Required empty public constructor
+
     }
 
     /**
@@ -67,7 +80,36 @@ public class FragmentProyectos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_proyectos, container, false);
+        View vista  = inflater.inflate(R.layout.fragment_fragment_proyectos, container, false);
+        username = Utils.getUserName();
+
+        ArrayList<String> datos = new ArrayList<String>();
+        datos.add(null);
+        datos.add(username);
+
+        listaProyectos = new ArrayList<>();
+
+        CRUD.obtener_proyectos obj = new CRUD.obtener_proyectos(vista);
+        obj.execute(datos);
+
+        FloatingActionButton floatingActionButton = ((menu_app) getActivity()).getFloatingActionButton();
+        if (floatingActionButton != null) {
+            floatingActionButton.show();
+        }
+        return vista;
+    }
+
+    public void setAdapter(View vista){
+
+        recyclerProyectos = vista.findViewById(R.id.recycler_proyectos);
+        recyclerProyectos.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        AdapterProyectos adapterProyectos = new AdapterProyectos(listaProyectos);
+        recyclerProyectos.setAdapter(adapterProyectos);
+    }
+
+    public void llenarListaProyectos(ArrayList newlistaProyectos){
+        listaProyectos = newlistaProyectos;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -108,4 +150,6 @@ public class FragmentProyectos extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

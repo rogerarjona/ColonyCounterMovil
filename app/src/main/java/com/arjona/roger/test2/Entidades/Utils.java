@@ -1,4 +1,4 @@
-package com.arjona.roger.test2.Conexion;
+package com.arjona.roger.test2.Entidades;
 
 import android.content.Context;
 import android.content.SharedPreferences;

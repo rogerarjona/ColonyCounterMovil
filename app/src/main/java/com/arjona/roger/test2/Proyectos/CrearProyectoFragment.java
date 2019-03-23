@@ -12,11 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.arjona.roger.test2.Conexion.CRUD;
-import com.arjona.roger.test2.Conexion.Utils;
-import com.arjona.roger.test2.MainActivity;
+import com.arjona.roger.test2.Entidades.Utils;
 import com.arjona.roger.test2.R;
 import com.arjona.roger.test2.menu_app;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
