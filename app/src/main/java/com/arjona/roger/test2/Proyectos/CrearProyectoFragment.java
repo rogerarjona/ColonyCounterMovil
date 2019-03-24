@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.arjona.roger.test2.Conexion.CRUD;
 import com.arjona.roger.test2.Entidades.Utils;
@@ -83,7 +84,13 @@ public class CrearProyectoFragment extends Fragment {
 
         FloatingActionButton floatingActionButton = ((menu_app) getActivity()).getFloatingActionButton();
         if (floatingActionButton != null) {
-            floatingActionButton.hide();
+            floatingActionButton.show();
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Estas en crear proyecto", Toast.LENGTH_LONG).show();
+                }
+            });
         }
 
         btncrearproyecto.setOnClickListener(new View.OnClickListener() {

@@ -5,12 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.arjona.roger.test2.Adaptadores.AdapterProyectos;
 import com.arjona.roger.test2.Conexion.CRUD;
@@ -41,9 +44,9 @@ public class FragmentProyectos extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    public ArrayList<Proyecto> listaProyectos;
-    RecyclerView recyclerProyectos;
-    String username;
+    ArrayList<Proyecto> listaProyectos;
+    private RecyclerView recyclerProyectos;
+    private String username;
 
     public FragmentProyectos() {
 
@@ -89,23 +92,40 @@ public class FragmentProyectos extends Fragment {
 
         listaProyectos = new ArrayList<>();
 
-        CRUD.obtener_proyectos obj = new CRUD.obtener_proyectos(vista);
+        CRUD.obtener_proyectos obj = new CRUD.obtener_proyectos(vista, getContext());
         obj.execute(datos);
 
         FloatingActionButton floatingActionButton = ((menu_app) getActivity()).getFloatingActionButton();
         if (floatingActionButton != null) {
             floatingActionButton.show();
         }
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment_layout = new CrearProyectoFragment();
+                getFragmentManager().beginTransaction().replace(R.id.content_main, fragment_layout).commit();
+            }
+        });
         return vista;
     }
 
-    public void setAdapter(View vista){
+    public void setAdapterManual(View vista, final Context context){
 
         recyclerProyectos = vista.findViewById(R.id.recycler_proyectos);
         recyclerProyectos.setLayoutManager(new LinearLayoutManager(getContext()));
 
         AdapterProyectos adapterProyectos = new AdapterProyectos(listaProyectos);
+        adapterProyectos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,
+                        "Seleccion:" + listaProyectos.get(recyclerProyectos.getChildAdapterPosition(v)).getNombre(), Toast.LENGTH_LONG).show();
+                Log.e("OnPostExecute", "Lista:" + listaProyectos.get(recyclerProyectos.getChildAdapterPosition(v)).getNombre());
+            }
+        });
         recyclerProyectos.setAdapter(adapterProyectos);
+
     }
 
     public void llenarListaProyectos(ArrayList newlistaProyectos){

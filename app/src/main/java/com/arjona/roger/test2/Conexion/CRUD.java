@@ -1,5 +1,6 @@
 package com.arjona.roger.test2.Conexion;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -15,8 +16,9 @@ import java.util.List;
 
 public class CRUD {
 
-    private static String webhook = "";
+    private static String webhook = "https://d6a5db6e.ngrok.io/";
 
+    /////////////////////// PROYECTOS ///////////////////////////
     public static class crear_proyecto extends AsyncTask<List, Long, Integer>
     {
 
@@ -49,16 +51,17 @@ public class CRUD {
         }
     }
 
-    public static  class obtener_proyectos extends AsyncTask<List, Long, Integer>
+    public static class obtener_proyectos extends AsyncTask<List, Long, Integer>
     {
-        List<Proyecto> lista_proyectos = new ArrayList<>();
-        JSONObject jsonObject = null;
-        String response = "";
-        int status = 0;
-        View vista;
-
-        public obtener_proyectos(View vista) {
+        private List<Proyecto> lista_proyectos = new ArrayList<>();
+        private JSONObject jsonObject = null;
+        private String response = "";
+        private int status = 0;
+        private View vista;
+        private Context context;
+        public obtener_proyectos(View vista, Context context) {
             this.vista = vista;
+            this.context = context;
         }
 
         @Override
@@ -101,10 +104,19 @@ public class CRUD {
 
                 FragmentProyectos fragmentProyectos = new FragmentProyectos();
                 fragmentProyectos.llenarListaProyectos((ArrayList) lista_proyectos);
-                fragmentProyectos.setAdapter(vista);
+                fragmentProyectos.setAdapterManual(vista, context);
                 Log.e("OnPostExecute", "Lista:" + lista_proyectos.get(result).getNombre());
             }
 
+        }
+    }
+
+    public static class editar_proyecto extends AsyncTask<List, Long, Integer>
+    {
+
+        @Override
+        protected Integer doInBackground(List... lists) {
+            return null;
         }
     }
 
@@ -117,5 +129,8 @@ public class CRUD {
         }
     }
 
+    /////////////////////// FOTOGRAFIAS ///////////////////////////
+
+    /////////////////////// OTROS ///////////////////////////
 
 }

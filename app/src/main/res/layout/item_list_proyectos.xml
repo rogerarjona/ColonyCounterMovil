@@ -6,7 +6,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:layout_marginBottom="10dp">
 
         <ImageView
             android:id="@+id/proyecto_image"
@@ -16,12 +18,14 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_launcher"
+            android:paddingBottom="10dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <TextView
                 android:id="@+id/titulo_proyecto_id"
@@ -42,4 +46,5 @@
 
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>
