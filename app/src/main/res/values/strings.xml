@@ -11,6 +11,39 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="COLONY_FORM">
+        <item>Puntiforme</item>
+        <item>Circular</item>
+        <item>Irregular</item>
+        <item>Rizoide</item>
+        <item>Fusiforme</item>
+    </string-array>
+
+    <string-array name="COLONY_SURFACE">
+        <item>Lisa</item>
+        <item>Rugosa</item>
+        <item>Plegada</item>
+    </string-array>
+
+    <string-array name="COLONY_EDGE">
+        <item>Redondeado</item>
+        <item>Ondulado</item>
+        <item>Lobulado</item>
+        <item>Filamentoso</item>
+    </string-array>
+
+    <string-array name="COLONY_ELEVATION">
+        <item>Plana</item>
+        <item>Convexa</item>
+        <item>Elevada</item>
+    </string-array>
+
+    <string-array name="COLONY_GROWTH">
+        <item>Sin Crecimiento</item>
+        <item>Crecimiento Regular</item>
+        <item>Crecimient Abundante</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
 
 </resources>

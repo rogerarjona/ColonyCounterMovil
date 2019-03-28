@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.arjona.roger.test2.Fotografias.FragmentFotografias;
 import com.arjona.roger.test2.Proyectos.CrearProyectoFragment;
 import com.arjona.roger.test2.Proyectos.FragmentProyectos;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,7 +27,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class menu_app extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CrearProyectoFragment.OnFragmentInteractionListener, FragmentProyectos.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CrearProyectoFragment.OnFragmentInteractionListener,
+        FragmentProyectos.OnFragmentInteractionListener, FragmentFotografias.OnFragmentInteractionListener, FragmentDatosFotografias.OnFragmentInteractionListener {
 
     FloatingActionButton fab;
     public static Context contextOfApplication;
@@ -121,7 +123,7 @@ public class menu_app extends AppCompatActivity
         boolean fragment_seleccionado = false;
 
         if (id == R.id.nav_camera) {
-            fragment_layout = new CrearProyectoFragment();
+            fragment_layout = new FragmentProyectos();
             fragment_seleccionado = true;
         } /*else if (id == R.id.nav_gallery) {
 
@@ -133,8 +135,8 @@ public class menu_app extends AppCompatActivity
 
         } */
         else if (id == R.id.nav_send) {
-            fragment_layout = new FragmentProyectos();
-            fragment_seleccionado = true;
+            //fragment_layout = new FragmentProyectos();
+            //'fragment_seleccionado = true;
         }
 
         if (fragment_seleccionado){

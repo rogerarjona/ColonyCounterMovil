@@ -11,11 +11,6 @@ public class Proyecto {
     public String descripcion;
     public String url_imagen;
 
-
-    public Proyecto(){
-
-    }
-
     public Proyecto(JSONObject proyecto) throws JSONException {
         this.nombre = proyecto.getString("nombre");
         this.usuario = proyecto.getString("usuario");

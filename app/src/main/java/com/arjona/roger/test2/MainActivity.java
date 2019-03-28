@@ -51,19 +51,7 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         etmulti = findViewById(R.id.etmulti);
         buttonhttp = findViewById(R.id.buttonhttp);
-        buttonhttp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<String> datos = new ArrayList<String>();
-                datos.add("1");
-                datos.add("roger");
 
-
-
-                new CRUD.crear_proyecto().execute(datos);
-                System.out.println("");
-            }
-        });
 
         atakephoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 .setAutoZoomEnabled(true)
                 .setInitialCropWindowPaddingRatio(0)
                 .start(this);
-
     }
 
     @Override

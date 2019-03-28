@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,7 @@ import com.arjona.roger.test2.Adaptadores.AdapterProyectos;
 import com.arjona.roger.test2.Conexion.CRUD;
 import com.arjona.roger.test2.Entidades.Proyecto;
 import com.arjona.roger.test2.Entidades.Utils;
+import com.arjona.roger.test2.Fotografias.FragmentFotografias;
 import com.arjona.roger.test2.R;
 import com.arjona.roger.test2.menu_app;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -92,7 +94,7 @@ public class FragmentProyectos extends Fragment {
 
         listaProyectos = new ArrayList<>();
 
-        CRUD.obtener_proyectos obj = new CRUD.obtener_proyectos(vista, getContext());
+        CRUD.obtener_proyectos obj = new CRUD.obtener_proyectos(vista, getContext(), getFragmentManager());
         obj.execute(datos);
 
         FloatingActionButton floatingActionButton = ((menu_app) getActivity()).getFloatingActionButton();
@@ -110,7 +112,7 @@ public class FragmentProyectos extends Fragment {
         return vista;
     }
 
-    public void setAdapterManual(View vista, final Context context){
+    public void setAdapterManual(View vista, final Context context, final FragmentManager manager){
 
         recyclerProyectos = vista.findViewById(R.id.recycler_proyectos);
         recyclerProyectos.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -121,7 +123,16 @@ public class FragmentProyectos extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(context,
                         "Seleccion:" + listaProyectos.get(recyclerProyectos.getChildAdapterPosition(v)).getNombre(), Toast.LENGTH_LONG).show();
-                Log.e("OnPostExecute", "Lista:" + listaProyectos.get(recyclerProyectos.getChildAdapterPosition(v)).getNombre());
+                //Log.e("OnPostExecute", "Lista:" + listaProyectos.get(recyclerProyectos.getChildAdapterPosition(v)).getNombre());
+
+                String id_proyecto_seleccionado = listaProyectos.get(recyclerProyectos.getChildAdapterPosition(v)).getId();
+                Bundle bundle_envia = new Bundle();
+                bundle_envia.putString("id_proyecto", id_proyecto_seleccionado);
+
+                FragmentFotografias fragment_fotografias = new FragmentFotografias();
+                fragment_fotografias.setArguments(bundle_envia);
+                manager.beginTransaction().replace(R.id.content_main, fragment_fotografias).commit();
+
             }
         });
         recyclerProyectos.setAdapter(adapterProyectos);

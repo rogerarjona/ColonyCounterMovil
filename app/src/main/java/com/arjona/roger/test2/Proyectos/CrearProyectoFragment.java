@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.arjona.roger.test2.Conexion.CRUD;
@@ -40,7 +42,8 @@ public class CrearProyectoFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
-    public String username;
+    private String username;
+    private ProgressBar progressBar;
 
     public CrearProyectoFragment() {
         // Required empty public constructor
@@ -78,9 +81,11 @@ public class CrearProyectoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View vista = inflater.inflate(R.layout.fragment_crear_proyecto, container, false);
+        final View vista = inflater.inflate(R.layout.fragment_crear_proyecto, container, false);
         Button btncrearproyecto = vista.findViewById(R.id.btncrearproyecto);
         final EditText etnombre_proyecto = vista.findViewById(R.id.etnombre_proyecto);
+        final EditText et_descripcion_proyecto = vista.findViewById(R.id.et_descripcion_proyecto);
+        progressBar = vista.findViewById(R.id.progressbar);
 
         FloatingActionButton floatingActionButton = ((menu_app) getActivity()).getFloatingActionButton();
         if (floatingActionButton != null) {
@@ -97,21 +102,42 @@ public class CrearProyectoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String nombre_proyecto = etnombre_proyecto.getText().toString();
+                String descripcion_proyecto = et_descripcion_proyecto.getText().toString();
+
                 if(TextUtils.isEmpty(nombre_proyecto)){
                     etnombre_proyecto.setError("Escriba un nombre!");
                     return;
                 }
+                if (TextUtils.isEmpty(descripcion_proyecto)){
+                    descripcion_proyecto = "";
+                }
 
                 ArrayList<String> datos = new ArrayList<String>();
                 datos.add(nombre_proyecto);
+                datos.add(descripcion_proyecto);
                 datos.add(username);
-
-                new CRUD.crear_proyecto().execute(datos);
+                CRUD.crear_proyecto crear_proyecto = new CRUD.crear_proyecto(vista, getFragmentManager());
+                hacerVisible();
+                crear_proyecto.execute(datos);
                 //Toast.makeText(getContext(), nombre_proyecto, Toast.LENGTH_LONG).show();
             }
         });
 
         return vista;
+    }
+
+    public void hacerVisible(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hacerInvisible(View v){
+        ProgressBar progressBar = v.findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.GONE);
+    }
+
+    public void regresarMenuProyectos(FragmentManager manager){
+        Fragment fragment_layout = new FragmentProyectos();
+        manager.beginTransaction().replace(R.id.content_main, fragment_layout).commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

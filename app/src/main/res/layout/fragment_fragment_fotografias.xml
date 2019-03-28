@@ -3,16 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Proyectos.FragmentProyectos"
-    android:id="@+id/fragment_proyectos_id"
-    >
+    tools:context=".Fotografias.FragmentFotografias">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_proyectos"
+        android:id="@+id/recycler_fotografias"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
     </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>

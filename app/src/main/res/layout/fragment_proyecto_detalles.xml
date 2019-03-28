@@ -3,16 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Proyectos.FragmentProyectos"
-    android:id="@+id/fragment_proyectos_id"
-    >
+    tools:context=".Fotografias.FragmentDetallesFotografia">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_proyectos"
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

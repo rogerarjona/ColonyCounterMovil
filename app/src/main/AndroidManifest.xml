@@ -35,6 +35,9 @@
         <!--<activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>-->
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
+        <meta-data
+            android:name="CLOUDINARY_URL"
+            android:value="cloudinary://577752173664429:Uk0ZBbLFwPS1l5ZUbNbD3qYqONY@rogerarjona" />
     </application>
 
 </manifest>
