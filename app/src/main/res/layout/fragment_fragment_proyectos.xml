@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".Proyectos.FragmentProyectos"
     android:id="@+id/fragment_proyectos_id"
+    android:background="@color/grises"
     >
 
     <androidx.recyclerview.widget.RecyclerView

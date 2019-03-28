@@ -89,7 +89,7 @@ public class CrearProyectoFragment extends Fragment {
 
         FloatingActionButton floatingActionButton = ((menu_app) getActivity()).getFloatingActionButton();
         if (floatingActionButton != null) {
-            floatingActionButton.show();
+            floatingActionButton.hide();
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
