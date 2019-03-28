@@ -42,6 +42,7 @@ public class menu_app extends AppCompatActivity
 
         contextOfApplication = getApplicationContext();
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.hide();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
